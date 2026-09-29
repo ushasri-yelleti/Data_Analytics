@@ -1,0 +1,59 @@
+Day 1
+What is a program?
+--> Program is the process of instructions given by the user or programmer to plan wht to do nd how to do
+example:
+user_en = 2000
+bal_ = 10000
+result = bal_ - user_en
+print(result)
+
+Procedural language?
+--> A procedural language is organised mainly on functions. It follows a script. Ex: C lang. 
+--> c
+def cal_ad(a,b):
+   return a+b
+
+a=7
+b=9
+any_ = cal_ad(a,b)
+print(any_)
+
+
+Object oriented programming?
+--> OOP is organised mainly on classes nd objects. ex: python
+eg:
+num=7
+print(type(num))
+
+What is python?
+--> Its a high level language (becoz we don't need to worry abt low level memory allocation)
+- It takes care abt memory allocation
+num=9
+print(type(num))
+print(id(num))
+
+--> Interpreter language( becoz it follows line by line execution)
+num = 9
+num_2 = 90
+print(num)
+print(type(num))
+print(id(num))
+
+--> Dynamically typed language(becoz we don't need to mention the type of data passing to the variable)
+num=78
+any_ = ['Python']
+nums = [1,2]
+all_ = (1,2)
+print(type(num))
+print(type(any_))
+print(type(nums))
+print(type(all_))
+
+Why python?
+--> more libraries, cross platform, open source, simple syntax.
+
+Applications of python:  
+data science, web development, AI, ML, Deep learning.
+
+History of Python:
+--> It was started at early 1980s nd released in the year 1991 by Guido Van Rossum and he picked the name frm his most loved series called "monty python". The first version was released in 1991 which is python 0.9.0 nd now the version we are using 3.14. 
