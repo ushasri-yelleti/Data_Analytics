@@ -1,0 +1,2732 @@
+MySql [20 days]:--
+Day 2:--
+
+
+** Client server architecture:-- (3 components)
+1. client:-- The role of the client is to snd req to the server nd to get response frm the server.
+2. server:-- It is a software to take requests frm the clients. If the req is valid, it will generate some response nd we can handover tht response to client. If the client req is not valid, it will raise some error status codes.
+3. protocol:-- The protocol consists a set of rules to be followed while sending req frm client to server.
+
+** Data models in dbms:--  it defines how the data is stored, organised and manipulated.  (6 types:--)
+1. physical model
+2. hierarchy model
+4. network model
+5. entitity relationship model(er models)
+
+
+
+
+
+
+Identifiers:-- It must not start with a digit, spaces r not considered to declare identifiers, reserved words are also nt considered to declare identifiers. max length to declare identifiers is 15.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+SQL COMMANDS:-- 
+Structured query lang.
+** sql is a standardized programing lang specially designed fr managing nd manipulating relational databases. It provides a declarative syntax tht allows users to define wht data they want to retrieve, insert, update, or delete without specifying exactly how database should execute  these operations.
+
+* DDL (Data definition lang):-
+>> CREATE: (to create database)
+CREATE DATABASE database-name;
+or
+CREATE SCHEMA schema-name
+ 
+To create table:
+CREATE TABLE table-name(
+column-name datatype(size) constraint,
+column-name datatype(size) constraint,
+column-name datatype(size) constraint,
+--------------------------------------
+--------------------------------------
+column-name datatype(size) constraint);
+
+
+>>DROP: (Permanently deletes an existing database objects(table, db,index,views) along with its data nd structure.)
+To drop db/schema:
+drop database database-name
+        or
+drop schema schema-name;
+
+To drop table:
+
+drop table table-name;
+
+Alter: by using this command we can modify the existing table structure
+
+
+
+
+how to drp a column: 
+-- syntax: ALTER TABLE TABLE-NAME DROP COLUMN COLUMN-NAME;
+-- HOW TO CHANGE TABLE NAME:
+-- SYNTAX: ALTER TABLE TABLE-NAME RENAME TO NEW-TABLE-NAME
+
+
+
+ SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.01 sec)
+
+mysql> CREATE DATABASE DA6;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| da6                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE SCHEMA CG;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| cg                 |
+| da6                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> DROP SCHEMA CG,
+    -> ^C
+mysql> DROP SCHEMA CG;
+Query OK, 0 rows affected (0.01 sec)
+
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| da6                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> USE DA6;
+Database changed
+mysql> CREATE TABLE EMPLOYEES(
+    -> EMPID CHAR(5),
+    -> FNAME VARCHAR(100),
+    -> AGE INT,
+    -> LNAME VARCHAR(70),
+    -> DOJ DATE,
+    -> ADDRESS TINYTEXT,
+    -> DEPT VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DESC EMPLOYEES;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| EMPID   | char(5)      | YES  |     | NULL    |       |
+| FNAME   | varchar(100) | YES  |     | NULL    |       |
+| AGE     | int          | YES  |     | NULL    |       |
+| LNAME   | varchar(70)  | YES  |     | NULL    |       |
+| DOJ     | date         | YES  |     | NULL    |       |
+| ADDRESS | tinytext     | YES  |     | NULL    |       |
+| DEPT    | varchar(20)  | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> SHOW COLUMNS FROM EMPLOYEES;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| EMPID   | char(5)      | YES  |     | NULL    |       |
+| FNAME   | varchar(100) | YES  |     | NULL    |       |
+| AGE     | int          | YES  |     | NULL    |       |
+| LNAME   | varchar(70)  | YES  |     | NULL    |       |
+| DOJ     | date         | YES  |     | NULL    |       |
+| ADDRESS | tinytext     | YES  |     | NULL    |       |
+| DEPT    | varchar(20)  | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> -- modify the fname column in employees table to varchar(70)
+mysql> -- syntax: alter table table-name modify column-name datatype size
+mysql> ALTER TABLE EMPLOYEES MODIFY FNAME VARCHAR(70);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EMPID   | char(5)     | YES  |     | NULL    |       |
+| FNAME   | varchar(70) | YES  |     | NULL    |       |
+| AGE     | int         | YES  |     | NULL    |       |
+| LNAME   | varchar(70) | YES  |     | NULL    |       |
+| DOJ     | date        | YES  |     | NULL    |       |
+| ADDRESS | tinytext    | YES  |     | NULL    |       |
+| DEPT    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> -- add a new column named with location to employees table
+mysql> -- syntax: alter table table-name add column-name datatype(size);
+mysql> ALTER TABLE EMPLOYEES ADD LOCATION TINYTEXT;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| EMPID    | char(5)     | YES  |     | NULL    |       |
+| FNAME    | varchar(70) | YES  |     | NULL    |       |
+| AGE      | int         | YES  |     | NULL    |       |
+| LNAME    | varchar(70) | YES  |     | NULL    |       |
+| DOJ      | date        | YES  |     | NULL    |       |
+| ADDRESS  | tinytext    | YES  |     | NULL    |       |
+| DEPT     | varchar(20) | YES  |     | NULL    |       |
+| LOCATION | tinytext    | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEES ADD PFID INT AFTER ADDRESS;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| EMPID    | char(5)     | YES  |     | NULL    |       |
+| FNAME    | varchar(70) | YES  |     | NULL    |       |
+| AGE      | int         | YES  |     | NULL    |       |
+| LNAME    | varchar(70) | YES  |     | NULL    |       |
+| DOJ      | date        | YES  |     | NULL    |       |
+| ADDRESS  | tinytext    | YES  |     | NULL    |       |
+| PFID     | int         | YES  |     | NULL    |       |
+| DEPT     | varchar(20) | YES  |     | NULL    |       |
+| LOCATION | tinytext    | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> -- how to rename the column name
+mysql> -- syntax: ALTER TABLE TABLE-NAME CHANGE EXISTING COLUMN-NAME NEW COLUMN-NAME DATATYPE(SIZE);
+mysql> ALTER TABLE EMPLOYEES CHANGE FNAME FIRSTNAME VARCHAR(50);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| EMPID     | char(5)     | YES  |     | NULL    |       |
+| FIRSTNAME | varchar(50) | YES  |     | NULL    |       |
+| AGE       | int         | YES  |     | NULL    |       |
+| LNAME     | varchar(70) | YES  |     | NULL    |       |
+| DOJ       | date        | YES  |     | NULL    |       |
+| ADDRESS   | tinytext    | YES  |     | NULL    |       |
+| PFID      | int         | YES  |     | NULL    |       |
+| DEPT      | varchar(20) | YES  |     | NULL    |       |
+| LOCATION  | tinytext    | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEES CHANGE LNAME LASTNAME VARCHAR(50);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| EMPID     | char(5)     | YES  |     | NULL    |       |
+| FIRSTNAME | varchar(50) | YES  |     | NULL    |       |
+| AGE       | int         | YES  |     | NULL    |       |
+| LASTNAME  | varchar(50) | YES  |     | NULL    |       |
+| DOJ       | date        | YES  |     | NULL    |       |
+| ADDRESS   | tinytext    | YES  |     | NULL    |       |
+| PFID      | int         | YES  |     | NULL    |       |
+| DEPT      | varchar(20) | YES  |     | NULL    |       |
+| LOCATION  | tinytext    | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> DESC EMPLOYEES;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| EMPID     | char(5)     | YES  |     | NULL    |       |
+| FIRSTNAME | varchar(50) | YES  |     | NULL    |       |
+| AGE       | int         | YES  |     | NULL    |       |
+| LASTNAME  | varchar(50) | YES  |     | NULL    |       |
+| DOJ       | date        | YES  |     | NULL    |       |
+| ADDRESS   | tinytext    | YES  |     | NULL    |       |
+| DEPT      | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+
+
+Day-6
+
+DCL (DATA CONTROL LANGUAGE)
+Common Privileges u can grant:--
+select- read data
+insert- insert data
+update- modify data
+delete- remove data
+all privileges- full access
+
+----- GRANT & REVOKE ------
+
+**GRANT:-- GRANT PERMISSION
+SYNTAX:-- GRANT PRIVILAGE ON TABLE 
+
+
+
+
+
+
+
+
+mysql> use da6;
+Database changed
+mysql> CREATE TABLE STUDENTS(
+    -> SNO INT PRIMARY KEY
+    -> ^C
+mysql> CREATE TABLE STUDENTS(
+    -> SNO INT PRIMARY KEY,
+    -> SNAME VARCHAR(30),
+    -> SEMAIL VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO STUDENTS VALUES(111,'USHA','USHA@GMAIL.COM');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROMSTUDENTS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROMSTUDENTS' at line 1
+mysql> SELECT*FROM STUDENTS;
++-----+-------+----------------+
+| SNO | SNAME | SEMAIL         |
++-----+-------+----------------+
+| 111 | USHA  | USHA@GMAIL.COM |
++-----+-------+----------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE USER USHA IDENTIFIED BY 'USHA123';
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> CREATE USER SRI IDENTIFIED BY 'SRI123';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT SELECT,INSERT,UPDATE ON STUDENTS TO USHA;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT DROP,SELECT ON STUDENTS TO SRI;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> REVOKE INSERT,UPDATE ON STUDENTS FROM USHA;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> REVOKE SELECT ON STUDENTS FROM SRI;
+Query OK, 0 rows affected (0.00 sec)
+------TO CREATE A USER:------
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u USHA -p
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> INSERT INTO STUDENTS VALUES(333,'LATHA','LATHA@GMAIL');
+ERROR 1046 (3D000): No database selected
+mysql> USE DA6;
+Database changed
+mysql> INSERT INTO STUDENTS VALUES(333,'LATHA','LATHA@GMAIL');
+ERROR 1142 (42000): INSERT command denied to user 'USHA'@'localhost' for table 'students'
+mysql> SELECT*FROM STUDENTS;
++-----+-------+----------------+
+| SNO | SNAME | SEMAIL         |
++-----+-------+----------------+
+| 111 | USHA  | USHA@GMAIL.COM |
++-----+-------+----------------+
+1 row in set (0.00 sec)
+
+
+--------- PERFORM OPERATIONS ON PRODUCTS TABLE------------
+
+ USE DA6
+Database changed
+mysql> SHOW TABLES;
++---------------+
+| Tables_in_da6 |
++---------------+
+| students      |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> CREATE TABLE PRODUCTS(
+    -> id INT,
+    ->  name VARCHAR(100),
+    ->  price DECIMAL(10,2),
+    ->  qty INT
+    ->  );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Products VALUES
+    ->  (1, 'Pen', 10.00, 100),
+    ->  (2, 'Notebook', 25.00, 50),
+    ->  (3, 'Pencil', 5.00, 200),
+    ->  (4, 'Eraser', 3.00, 300),
+    ->  (5, 'Marker', 15.00, 80),
+    ->  (6, 'Scale', 20.00, 150),
+    ->  (7, 'Sharpener', 8.00, 120),
+    ->  (8, 'Geometry Box', 120.00, 40),
+    ->  (9, 'Sketch Pen', 60.00, 75),
+    ->  (10, 'Crayons', 90.00, 55);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM PRODUCTS;
++------+--------------+--------+------+
+| id   | name         | price  | qty  |
++------+--------------+--------+------+
+|    1 | Pen          |  10.00 |  100 |
+|    2 | Notebook     |  25.00 |   50 |
+|    3 | Pencil       |   5.00 |  200 |
+|    4 | Eraser       |   3.00 |  300 |
+|    5 | Marker       |  15.00 |   80 |
+|    6 | Scale        |  20.00 |  150 |
+|    7 | Sharpener    |   8.00 |  120 |
+|    8 | Geometry Box | 120.00 |   40 |
+|    9 | Sketch Pen   |  60.00 |   75 |
+|   10 | Crayons      |  90.00 |   55 |
++------+--------------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> SHOW TABLES
+    -> ^C
+mysql> SHOW TABLES;
++---------------+
+| Tables_in_da6 |
++---------------+
+| products      |
+| students      |
++---------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT NAME,PRICE,PRICE+(PRICE*0.12)AS PRICE_WITH_TAX FROM PRODUCTS;
++--------------+--------+----------------+
+| NAME         | PRICE  | PRICE_WITH_TAX |
++--------------+--------+----------------+
+| Pen          |  10.00 |        11.2000 |
+| Notebook     |  25.00 |        28.0000 |
+| Pencil       |   5.00 |         5.6000 |
+| Eraser       |   3.00 |         3.3600 |
+| Marker       |  15.00 |        16.8000 |
+| Scale        |  20.00 |        22.4000 |
+| Sharpener    |   8.00 |         8.9600 |
+| Geometry Box | 120.00 |       134.4000 |
+| Sketch Pen   |  60.00 |        67.2000 |
+| Crayons      |  90.00 |       100.8000 |
++--------------+--------+----------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT NAME,PRICE,QTY,PRICE*QTY AS INVENTORY_PRICE FROM PRODUCTS;
++--------------+--------+------+-----------------+
+| NAME         | PRICE  | QTY  | INVENTORY_PRICE |
++--------------+--------+------+-----------------+
+| Pen          |  10.00 |  100 |         1000.00 |
+| Notebook     |  25.00 |   50 |         1250.00 |
+| Pencil       |   5.00 |  200 |         1000.00 |
+| Eraser       |   3.00 |  300 |          900.00 |
+| Marker       |  15.00 |   80 |         1200.00 |
+| Scale        |  20.00 |  150 |         3000.00 |
+| Sharpener    |   8.00 |  120 |          960.00 |
+| Geometry Box | 120.00 |   40 |         4800.00 |
+| Sketch Pen   |  60.00 |   75 |         4500.00 |
+| Crayons      |  90.00 |   55 |         4950.00 |
++--------------+--------+------+-----------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT NAME,PRICE,PRICE*10 AS PRICE_FOR_10_UNITS FROM PRODUCTS;
++--------------+--------+--------------------+
+| NAME         | PRICE  | PRICE_FOR_10_UNITS |
++--------------+--------+--------------------+
+| Pen          |  10.00 |             100.00 |
+| Notebook     |  25.00 |             250.00 |
+| Pencil       |   5.00 |              50.00 |
+| Eraser       |   3.00 |              30.00 |
+| Marker       |  15.00 |             150.00 |
+| Scale        |  20.00 |             200.00 |
+| Sharpener    |   8.00 |              80.00 |
+| Geometry Box | 120.00 |            1200.00 |
+| Sketch Pen   |  60.00 |             600.00 |
+| Crayons      |  90.00 |             900.00 |
++--------------+--------+--------------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT*FROM PRODUCTS WHERE QTY%50!=0;
++------+--------------+--------+------+
+| id   | name         | price  | qty  |
++------+--------------+--------+------+
+|    5 | Marker       |  15.00 |   80 |
+|    7 | Sharpener    |   8.00 |  120 |
+|    8 | Geometry Box | 120.00 |   40 |
+|    9 | Sketch Pen   |  60.00 |   75 |
+|   10 | Crayons      |  90.00 |   55 |
++------+--------------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT*FROM PRODUCTS WHERE QTY%50<>0;
++------+--------------+--------+------+
+| id   | name         | price  | qty  |
++------+--------------+--------+------+
+|    5 | Marker       |  15.00 |   80 |
+|    7 | Sharpener    |   8.00 |  120 |
+|    8 | Geometry Box | 120.00 |   40 |
+|    9 | Sketch Pen   |  60.00 |   75 |
+|   10 | Crayons      |  90.00 |   55 |
++------+--------------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE PRODUCTS SET QTY=QTY+2;
+Query OK, 10 rows affected (0.00 sec)
+Rows matched: 10  Changed: 10  Warnings: 0
+
+mysql> UPDATE PRODUCTS SET PRICE=PRICE-5;
+Query OK, 10 rows affected (0.00 sec)
+Rows matched: 10  Changed: 10  Warnings: 0
+
+mysql> UPDATE PRODUCTS SET QTY=QTY*2 WHERE NAME='ERASER';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE PRODUCTS SET QTY=QTY/2 WHERE NAME='MARKER';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> DELETE FROM PRODUCTS WHERE QTY<100;
+Query OK, 5 rows affected (0.01 sec)
+
+mysql> SELECT*FROM PRODUCTS;
++------+-----------+-------+------+
+| id   | name      | price | qty  |
++------+-----------+-------+------+
+|    1 | Pen       |  5.00 |  102 |
+|    3 | Pencil    |  0.00 |  202 |
+|    4 | Eraser    | -2.00 |  604 |
+|    6 | Scale     | 15.00 |  152 |
+|    7 | Sharpener |  3.00 |  122 |
++------+-----------+-------+------+
+5 rows in set (0.00 sec)
+
+-----OPERATIONS ON STUDENTSCORES TABLE--------
+mysql> CREATE TABLE StudentScores (
+    ->  id INT,
+    ->  name VARCHAR(100),
+    ->  subject VARCHAR(50),
+    ->  marks INT
+    ->  );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO StudentScores VALUES
+    ->  (1, 'Alice', 'Math', 95),
+    ->  (2, 'Bob', 'Math', 76),
+    ->  (3, 'Charlie', 'Math', 59),
+    ->  (4, 'Diana', 'Math', 88),
+    ->  (5, 'Eve', 'Math', 40),
+    ->  (6, 'Frank', 'Math', 95),
+    ->  (7, 'Grace', 'Science', 67),
+    ->  (8, 'Henry', 'Science', 82),
+    ->  (9, 'Ivy', 'English', 91),
+    ->  (10, 'Jack', 'English', 55),
+    ->  (11, 'Kevin', 'Math', 73),
+    ->  (12, 'Lily', 'Science', 48),
+    ->  (13, 'Mia', 'English', 100),
+    ->  (14, 'Noah', 'Math', 64),
+    ->  (15, 'Olivia', 'Science', 79);
+Query OK, 15 rows affected (0.00 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM STUDENTSCORES;
++------+---------+---------+-------+
+| id   | name    | subject | marks |
++------+---------+---------+-------+
+|    1 | Alice   | Math    |    95 |
+|    2 | Bob     | Math    |    76 |
+|    3 | Charlie | Math    |    59 |
+|    4 | Diana   | Math    |    88 |
+|    5 | Eve     | Math    |    40 |
+|    6 | Frank   | Math    |    95 |
+|    7 | Grace   | Science |    67 |
+|    8 | Henry   | Science |    82 |
+|    9 | Ivy     | English |    91 |
+|   10 | Jack    | English |    55 |
+|   11 | Kevin   | Math    |    73 |
+|   12 | Lily    | Science |    48 |
+|   13 | Mia     | English |   100 |
+|   14 | Noah    | Math    |    64 |
+|   15 | Olivia  | Science |    79 |
++------+---------+---------+-------+
+15 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENTSCORES WHERE MARKS>=80;
++------+-------+---------+-------+
+| id   | name  | subject | marks |
++------+-------+---------+-------+
+|    1 | Alice | Math    |    95 |
+|    4 | Diana | Math    |    88 |
+|    6 | Frank | Math    |    95 |
+|    8 | Henry | Science |    82 |
+|    9 | Ivy   | English |    91 |
+|   13 | Mia   | English |   100 |
++------+-------+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENTSCORES WHERE MARKS>=60;
++------+--------+---------+-------+
+| id   | name   | subject | marks |
++------+--------+---------+-------+
+|    1 | Alice  | Math    |    95 |
+|    2 | Bob    | Math    |    76 |
+|    4 | Diana  | Math    |    88 |
+|    6 | Frank  | Math    |    95 |
+|    7 | Grace  | Science |    67 |
+|    8 | Henry  | Science |    82 |
+|    9 | Ivy    | English |    91 |
+|   11 | Kevin  | Math    |    73 |
+|   13 | Mia    | English |   100 |
+|   14 | Noah   | Math    |    64 |
+|   15 | Olivia | Science |    79 |
++------+--------+---------+-------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENTSCORES WHERE MARKS<=50;
++------+------+---------+-------+
+| id   | name | subject | marks |
++------+------+---------+-------+
+|    5 | Eve  | Math    |    40 |
+|   12 | Lily | Science |    48 |
++------+------+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENTSCORES WHERE MARKS=95;
++------+-------+---------+-------+
+| id   | name  | subject | marks |
++------+-------+---------+-------+
+|    1 | Alice | Math    |    95 |
+|    6 | Frank | Math    |    95 |
++------+-------+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENTSCORES WHERE MARKS!=95;
++------+---------+---------+-------+
+| id   | name    | subject | marks |
++------+---------+---------+-------+
+|    2 | Bob     | Math    |    76 |
+|    3 | Charlie | Math    |    59 |
+|    4 | Diana   | Math    |    88 |
+|    5 | Eve     | Math    |    40 |
+|    7 | Grace   | Science |    67 |
+|    8 | Henry   | Science |    82 |
+|    9 | Ivy     | English |    91 |
+|   10 | Jack    | English |    55 |
+|   11 | Kevin   | Math    |    73 |
+|   12 | Lily    | Science |    48 |
+|   13 | Mia     | English |   100 |
+|   14 | Noah    | Math    |    64 |
+|   15 | Olivia  | Science |    79 |
++------+---------+---------+-------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENTSCORES WHERE MARKS<=60;
++------+---------+---------+-------+
+| id   | name    | subject | marks |
++------+---------+---------+-------+
+|    3 | Charlie | Math    |    59 |
+|    5 | Eve     | Math    |    40 |
+|   10 | Jack    | English |    55 |
+|   12 | Lily    | Science |    48 |
++------+---------+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE STUDENTSCORES SET MARKS=MARKS+10 WHERE MARKS<=50;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> UPDATE STUDENTSCORES SET MARKS=MARKS+5 WHERE MARKS<=60;
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> UPDATE STUDENTSCORES SET MARKS=MARKS+2 WHERE MARKS>90;
+Query OK, 4 rows affected (0.00 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> UPDATE STUDENTSCORES SET MARKS=MARKS+3 WHERE MARKS>=80;
+Query OK, 6 rows affected (0.01 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> UPDATE STUDENTSCORES SET MARKS=MARKS-1 WHERE MARKS!=95;
+Query OK, 15 rows affected (0.01 sec)
+Rows matched: 15  Changed: 15  Warnings: 0
+
+mysql> UPDATE STUDENTSCORES SET MARKS=MARKS+5 WHERE MARKS=95;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM STUDENTSCORES;
++------+---------+---------+-------+
+| id   | name    | subject | marks |
++------+---------+---------+-------+
+|    1 | Alice   | Math    |    99 |
+|    2 | Bob     | Math    |    75 |
+|    3 | Charlie | Math    |    63 |
+|    4 | Diana   | Math    |    90 |
+|    5 | Eve     | Math    |    54 |
+|    6 | Frank   | Math    |    99 |
+|    7 | Grace   | Science |    66 |
+|    8 | Henry   | Science |    84 |
+|    9 | Ivy     | English |   100 |
+|   10 | Jack    | English |    59 |
+|   11 | Kevin   | Math    |    72 |
+|   12 | Lily    | Science |    62 |
+|   13 | Mia     | English |   104 |
+|   14 | Noah    | Math    |    63 |
+|   15 | Olivia  | Science |    78 |
++------+---------+---------+-------+
+15 rows in set (0.00 sec)
+
+mysql> DELETE FROM STUDENTSCORES WHERE MARKS<50;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELETE FROM STUDENTSCORES WHERE MARKS<=60;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> DELETE FROM STUDENTSCORES WHERE MARKS>90;
+Query OK, 4 rows affected (0.00 sec)
+
+mysql> DELETE FROM STUDENTSCORES WHERE MARKS>=80;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> DELETE FROM STUDENTSCORES WHERE MARKS!=95;
+Query OK, 7 rows affected (0.00 sec)
+
+mysql> DELETE FROM STUDENTSCORES WHERE MARKS=76;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT*FROM STUDENTSCORES;
+Empty set (0.00 sec)
+
+****LOGICAL OPERATORS****
+AND:  IF BOTH R TRUE RETURN TRUE
+OR:   IF BOTH R FALSE RETURN FALSE
+NOT: NEGATION
+TRUE&FALSE; 0 MEANS FALSE, NON ZERO MEANS TRUE, ''(EMPTY STRING) MEANS FALSE
+IF X EVALUATES TO FALSE, THE RESULT IS x; otherwise the result is 
+
+
+OPERATIONS ON EMPLOYEES TABLE
+
+CREATE TABLE Employees (
+    ->  id INT,
+    ->  name VARCHAR(100),
+    ->  department VARCHAR(100),
+    ->  salary INT,
+    ->  isactive BOOLEAN
+    ->  );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Employees VALUES
+    ->  (1, 'Rahul Sharma', 'IT', 50000, TRUE),
+    ->  (2, 'Priya Reddy', 'HR', 30000, TRUE),
+    ->  (3, 'Amit Kumar', 'Finance', 45000, FALSE),
+    ->  (4, 'Sneha Patel', 'IT', 35000, TRUE),
+    ->  (5, 'Vikram Singh', 'Finance', 28000, TRUE),
+    ->  (6, 'Anjali Mehta', 'HR', 32000, FALSE),
+    ->  (7, 'Kiran Rao', 'IT', 60000, TRUE),
+    ->  (8, 'Pooja Verma', 'Marketing', 27000, TRUE),
+    ->  (9, 'Ramesh Naidu', 'Sales', 38000, TRUE),
+    ->  (10, 'Deepika Joshi', 'Finance', 52000, TRUE),
+    ->  (11, 'Suresh Babu', 'Marketing', 29000, FALSE),
+    ->  (12, 'Neha Kapoor', 'HR', 41000, TRUE),
+    ->  (13, 'Arjun Reddy', 'IT', 55000, FALSE),
+    ->  (14, 'Lakshmi Devi', 'Sales', 33000, TRUE),
+    ->  (15, 'Nikhil Jain', 'IT', 47000, TRUE);
+Query OK, 15 rows affected (0.01 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> SELECT*FROM EMPLOYEES WHERE DEPARTMENT='HR' OR SALARY<35000;
++------+--------------+------------+--------+----------+
+| id   | name         | department | salary | isactive |
++------+--------------+------------+--------+----------+
+|    2 | Priya Reddy  | HR         |  30000 |        1 |
+|    5 | Vikram Singh | Finance    |  28000 |        1 |
+|    6 | Anjali Mehta | HR         |  32000 |        0 |
+|    8 | Pooja Verma  | Marketing  |  27000 |        1 |
+|   11 | Suresh Babu  | Marketing  |  29000 |        0 |
+|   12 | Neha Kapoor  | HR         |  41000 |        1 |
+|   14 | Lakshmi Devi | Sales      |  33000 |        1 |
++------+--------------+------------+--------+----------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEES WHERE NOT DEPARTMENT='HR';
++------+---------------+------------+--------+----------+
+| id   | name          | department | salary | isactive |
++------+---------------+------------+--------+----------+
+|    1 | Rahul Sharma  | IT         |  50000 |        1 |
+|    3 | Amit Kumar    | Finance    |  45000 |        0 |
+|    4 | Sneha Patel   | IT         |  35000 |        1 |
+|    5 | Vikram Singh  | Finance    |  28000 |        1 |
+|    7 | Kiran Rao     | IT         |  60000 |        1 |
+|    8 | Pooja Verma   | Marketing  |  27000 |        1 |
+|    9 | Ramesh Naidu  | Sales      |  38000 |        1 |
+|   10 | Deepika Joshi | Finance    |  52000 |        1 |
+|   11 | Suresh Babu   | Marketing  |  29000 |        0 |
+|   13 | Arjun Reddy   | IT         |  55000 |        0 |
+|   14 | Lakshmi Devi  | Sales      |  33000 |        1 |
+|   15 | Nikhil Jain   | IT         |  47000 |        1 |
++------+---------------+------------+--------+----------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEES WHERE DEPARTMENT='FINANCE' OR(SALARY>30000 AND ISACTIVE=TRUE);
++------+---------------+------------+--------+----------+
+| id   | name          | department | salary | isactive |
++------+---------------+------------+--------+----------+
+|    1 | Rahul Sharma  | IT         |  50000 |        1 |
+|    3 | Amit Kumar    | Finance    |  45000 |        0 |
+|    4 | Sneha Patel   | IT         |  35000 |        1 |
+|    5 | Vikram Singh  | Finance    |  28000 |        1 |
+|    7 | Kiran Rao     | IT         |  60000 |        1 |
+|    9 | Ramesh Naidu  | Sales      |  38000 |        1 |
+|   10 | Deepika Joshi | Finance    |  52000 |        1 |
+|   12 | Neha Kapoor   | HR         |  41000 |        1 |
+|   14 | Lakshmi Devi  | Sales      |  33000 |        1 |
+|   15 | Nikhil Jain   | IT         |  47000 |        1 |
++------+---------------+------------+--------+----------+
+10 rows in set (0.00 sec)
+
+ delete from employees where department='hr' and isactive=false;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from employees where department='finance' or salary<35000;
+Query OK, 7 rows affected (0.00 sec)
+
+mysql> delete from employees where not department='it';
+Query OK, 2 rows affected (0.00 sec)
+ 
+----NULL OPERATOR----
+
+CREATE TABLE Projects (
+    ->    id INT,
+    ->    name VARCHAR(100),
+    ->    assignedto VARCHAR(100),
+    ->    start DATE,
+    ->    end DATE
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> INSERT INTO Projects VALUES
+    -> (1, 'Website Revamp', 'Alice', '2024-01-15', '2024-03-01'),
+    -> (2, 'Mobile App', 'Bob', '2024-02-01', NULL),
+    -> (3, 'Data Migration', NULL, NULL, NULL),
+    -> (4, 'SEO Optimization', 'Eve', '2024-03-10', '2024-04-20'),
+    -> (5, 'Cloud Migration', NULL, '2024-03-15', NULL);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select*from projects;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    2 | Mobile App       | Bob        | 2024-02-01 | NULL       |
+|    3 | Data Migration   | NULL       | NULL       | NULL       |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
+|    5 | Cloud Migration  | NULL       | 2024-03-15 | NULL       |
++------+------------------+------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select*from projects where assignedto is null;
++------+-----------------+------------+------------+------+
+| id   | name            | assignedto | start      | end  |
++------+-----------------+------------+------------+------+
+|    3 | Data Migration  | NULL       | NULL       | NULL |
+|    5 | Cloud Migration | NULL       | 2024-03-15 | NULL |
++------+-----------------+------------+------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select*from projects where start is null;
++------+----------------+------------+-------+------+
+| id   | name           | assignedto | start | end  |
++------+----------------+------------+-------+------+
+|    3 | Data Migration | NULL       | NULL  | NULL |
++------+----------------+------------+-------+------+
+1 row in set (0.00 sec)
+
+mysql> select*from projects where start is not null;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    2 | Mobile App       | Bob        | 2024-02-01 | NULL       |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
+|    5 | Cloud Migration  | NULL       | 2024-03-15 | NULL       |
++------+------------------+------------+------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select*from projects where end is not null;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
++------+------------------+------------+------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from projects where assignedto is not null;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    2 | Mobile App       | Bob        | 2024-02-01 | NULL       |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
++------+------------------+------------+------------+------------+
+3 rows in set (0.00 sec)
+
+update projects set name='frank' where assignedto is null;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update projects set start=curdate() where start is null;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update projects set name='completed' where end is not null;
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> delete from projects where assignedto=null;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from projects where start=null;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from projects where end is not null;
+Query OK, 2 rows affected (0.01 sec)
+
+
+----BETWEEN OPERATOR----
+
+CREATE TABLE Orders (
+    ->  id INT,
+    ->  customer_name VARCHAR(100),
+    ->  order_date DATE,
+    ->  total_amount DECIMAL(10,2)
+    ->  );
+Query OK, 0 rows affected (0.02 sec)
+mysql> -- STEP 2: Insert Records
+mysql> INSERT INTO Orders VALUES
+    ->  (1, 'Alice', '2024-03-01', 1500.00),
+    ->  (2, 'Bob', '2024-03-05', 450.00),
+    ->  (3, 'Charlie', '2024-03-10', 2500.00),
+    ->  (4, 'Diana', '2024-03-15', 800.00),
+    ->  (5, 'Eve', '2024-03-20', 1200.00),
+    ->  (6, 'Frank', '2024-03-25', 3000.00),
+    ->  (7, 'Grace', '2024-04-02', 1800.00),
+    ->  (8, 'Henry', '2024-04-08', 950.00),
+    ->  (9, 'Ivy', '2024-04-12', 2750.00),
+    ->  (10, 'Jack', '2024-04-18', 650.00),
+    ->  (11, 'Kevin', '2024-04-22', 4200.00),
+    ->  (12, 'Lily', '2024-05-01', 1350.00),
+    ->  (13, 'Michael', '2024-05-08', 5000.00),
+    ->  (14, 'Nancy', '2024-05-15', 2250.00),
+    ->  (15, 'Oliver', '2024-05-25', 900.00);
+Query OK, 15 rows affected (0.01 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> select*from orders;
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    1 | Alice         | 2024-03-01 |      1500.00 |
+|    2 | Bob           | 2024-03-05 |       450.00 |
+|    3 | Charlie       | 2024-03-10 |      2500.00 |
+|    4 | Diana         | 2024-03-15 |       800.00 |
+|    5 | Eve           | 2024-03-20 |      1200.00 |
+|    6 | Frank         | 2024-03-25 |      3000.00 |
+|    7 | Grace         | 2024-04-02 |      1800.00 |
+|    8 | Henry         | 2024-04-08 |       950.00 |
+|    9 | Ivy           | 2024-04-12 |      2750.00 |
+|   10 | Jack          | 2024-04-18 |       650.00 |
+|   11 | Kevin         | 2024-04-22 |      4200.00 |
+|   12 | Lily          | 2024-05-01 |      1350.00 |
+|   13 | Michael       | 2024-05-08 |      5000.00 |
+|   14 | Nancy         | 2024-05-15 |      2250.00 |
+|   15 | Oliver        | 2024-05-25 |       900.00 |
++------+---------------+------------+--------------+
+15 rows in set (0.00 sec)
+
+mysql> select*from orders where order_date between '2024-03-03' and '2024-03-10';
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    2 | Bob           | 2024-03-05 |       450.00 |
+|    3 | Charlie       | 2024-03-10 |      2500.00 |
++------+---------------+------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from orders where order_date between '2024-04-01' and '2024-04-30';
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    7 | Grace         | 2024-04-02 |      1800.00 |
+|    8 | Henry         | 2024-04-08 |       950.00 |
+|    9 | Ivy           | 2024-04-12 |      2750.00 |
+|   10 | Jack          | 2024-04-18 |       650.00 |
+|   11 | Kevin         | 2024-04-22 |      4200.00 |
++------+---------------+------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select*from orders where total_amount between 500 and 1500;
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    1 | Alice         | 2024-03-01 |      1500.00 |
+|    4 | Diana         | 2024-03-15 |       800.00 |
+|    5 | Eve           | 2024-03-20 |      1200.00 |
+|    8 | Henry         | 2024-04-08 |       950.00 |
+|   10 | Jack          | 2024-04-18 |       650.00 |
+|   12 | Lily          | 2024-05-01 |      1350.00 |
+|   15 | Oliver        | 2024-05-25 |       900.00 |
++------+---------------+------------+--------------+
+7 rows in set (0.00 sec)
+
+ update orders set total_amount=total_amount+1000 where order_date between '2024-03-04' AND '2024-03-10';
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update orders set total_amount=total_amount-200 where total_amount between 1000 AND 2000;
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> update orders set total_amount=total_amount+(total_amount*0.10) where total_amount between 2500 AND 5000;
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> delete from orders where order_date between '2024-03-10' and '2024-03-20';
+Query OK, 3 rows affected (0.01 sec)
+
+ delete from orders where total_amount between 2500 and 5000;
+Query OK, 3 rows affected (0.01 sec)
+
+----IN OPERATOR----
+
+ CREATE TABLE Emp (
+    ->  id INT,
+    ->  name VARCHAR(100),
+    ->  dept VARCHAR(20),
+    ->  salary INT
+    ->  );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> -- STEP 2: Insert Records
+mysql> INSERT INTO Emp VALUES
+    ->  (1, 'Alice', 'HR', 35000),
+    ->  (2, 'Bob', 'IT', 50000),
+    ->  (3, 'Charlie', 'Finance', 45000),
+    ->  (4, 'Diana', 'Marketing', 40000),
+    ->  (5, 'Eve', 'IT', 55000),
+    ->  (6, 'Frank', 'Finance', 48000),
+    ->  (7, 'Grace', 'Sales', 37000),
+    ->  (8, 'Henry', 'Admin', 42000),
+    ->  (9, 'Ivy', 'HR', 39000),
+    ->  (10, 'Jack', 'Sales', 46000),
+    ->  (11, 'Kevin', 'IT', 60000),
+    ->  (12, 'Lily', 'Marketing', 41000),
+    ->  (13, 'Michael', 'Admin', 38000),
+    ->  (14, 'Nancy', 'Finance', 52000),
+    ->  (15, 'Oliver', 'HR', 43000);
+Query OK, 15 rows affected (0.01 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMP;
++------+---------+-----------+--------+
+| id   | name    | dept      | salary |
++------+---------+-----------+--------+
+|    1 | Alice   | HR        |  35000 |
+|    2 | Bob     | IT        |  50000 |
+|    3 | Charlie | Finance   |  45000 |
+|    4 | Diana   | Marketing |  40000 |
+|    5 | Eve     | IT        |  55000 |
+|    6 | Frank   | Finance   |  48000 |
+|    7 | Grace   | Sales     |  37000 |
+|    8 | Henry   | Admin     |  42000 |
+|    9 | Ivy     | HR        |  39000 |
+|   10 | Jack    | Sales     |  46000 |
+|   11 | Kevin   | IT        |  60000 |
+|   12 | Lily    | Marketing |  41000 |
+|   13 | Michael | Admin     |  38000 |
+|   14 | Nancy   | Finance   |  52000 |
+|   15 | Oliver  | HR        |  43000 |
++------+---------+-----------+--------+
+15 rows in set (0.00 sec)
+
+mysql> select*from emp where dept IN('finance','it');
++------+---------+---------+--------+
+| id   | name    | dept    | salary |
++------+---------+---------+--------+
+|    2 | Bob     | IT      |  50000 |
+|    3 | Charlie | Finance |  45000 |
+|    5 | Eve     | IT      |  55000 |
+|    6 | Frank   | Finance |  48000 |
+|   11 | Kevin   | IT      |  60000 |
+|   14 | Nancy   | Finance |  52000 |
++------+---------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> update emp set salary=salary+2000 where dept in('hr','marketing');
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> delete from emp where dept in('finance','marketing');
+Query OK, 5 rows affected (0.01 sec)
+
+----CASE OPEARTORS----
+
+CREATE TABLE employees (
+    ->     emp_id INT PRIMARY KEY,
+    ->     emp_name VARCHAR(50),
+    ->     department VARCHAR(30),
+    ->     salary DECIMAL(10,2),
+    ->     experience INT,
+    ->     age INT
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO employees VALUES
+    -> (101,'Ravi','IT',65000,5,28),
+    -> (102,'Priya','HR',45000,2,24),
+    -> (103,'Amit','Finance',75000,8,35),
+    -> (104,'Sneha','IT',55000,3,27),
+    -> (105,'Rahul','Sales',40000,1,22),
+    -> (106,'Kiran','Finance',90000,12,40),
+    -> (107,'Anjali','HR',52000,4,29),
+    -> (108,'Suresh','Sales',68000,7,33);
+Query OK, 8 rows affected (0.00 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select*from employees;
++--------+----------+------------+----------+------------+------+
+| emp_id | emp_name | department | salary   | experience | age  |
++--------+----------+------------+----------+------------+------+
+|    101 | Ravi     | IT         | 65000.00 |          5 |   28 |
+|    102 | Priya    | HR         | 45000.00 |          2 |   24 |
+|    103 | Amit     | Finance    | 75000.00 |          8 |   35 |
+|    104 | Sneha    | IT         | 55000.00 |          3 |   27 |
+|    105 | Rahul    | Sales      | 40000.00 |          1 |   22 |
+|    106 | Kiran    | Finance    | 90000.00 |         12 |   40 |
+|    107 | Anjali   | HR         | 52000.00 |          4 |   29 |
+|    108 | Suresh   | Sales      | 68000.00 |          7 |   33 |
++--------+----------+------------+----------+------------+------+
+8 rows in set (0.00 sec)
+
+mysql> select emp_name, salary, case when salary>=80000 then 'high salary' when salary>=60000 then 'medium salary' else 'low salary' end as salary_category from employees;
++----------+----------+-----------------+
+| emp_name | salary   | salary_category |
++----------+----------+-----------------+
+| Ravi     | 65000.00 | medium salary   |
+| Priya    | 45000.00 | low salary      |
+| Amit     | 75000.00 | medium salary   |
+| Sneha    | 55000.00 | low salary      |
+| Rahul    | 40000.00 | low salary      |
+| Kiran    | 90000.00 | high salary     |
+| Anjali   | 52000.00 | low salary      |
+| Suresh   | 68000.00 | medium salary   |
++----------+----------+-----------------+
+8 rows in set (0.00 sec)
+
+----SYSTEM INFORMATIC FUNCTIONS:----
+
+----AGGREGATE FUNCTIONS----
+COUNT();-- counts the records
+MIN():- returns the min value
+MAX() :-- returns the max value
+AVG(); gives avg
+SUM();sums the elements
+
+----CLAUSES----
+
+In MYSQL clauses r used to control how data is filtered, grouped, sorted or modified in sql queries. They make sql statements more useful nd powerful.
+
+----> WHERE CLAUSE:= Filters records based on specified conditions. where clause can be used as comparision, logical operators,etc
+syntax;  select column1,column2....from table where condition;
+
+----> GROUPBY CLAUSE:= Its used to group rows having the same values in one or more columns. It is commonly used by the aggregate functions such as min(),max(),sum(),count(),avg().
+syntax; select columnname,aggregate_function(columnname) from tablename group by columnname;
+
+----> HAVING CLAUSE:= Its used to filter grouped records after groupby clause. It is similar to where, but it works on gruped instead of individual rows
+syntax:-- select columnname,aggregate_function(columname) from tablename group by columname having condition;
+
+----> ORDERBY CLAUSE:= Its used to sort the result set in asecending/descending order
+syntax: select columname from tablename order by columname; 
+
+OPERATIONS ON TABLES USING CLAUSES;--
+
+CREATE TABLE STUDENTS (
+    ->     StudentID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     Name VARCHAR(50),
+    ->     Age INT,
+    ->     Department VARCHAR(30),
+    ->     Marks INT,
+    ->     City VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO STUDENTS (Name, Age, Department, Marks, City) VALUES
+    -> ('Anil', 20, 'CSE', 85, 'Hyderabad'),
+    -> ('Sneha', 22, 'ECE', 75, 'Mumbai'),
+    -> ('Ravi', 20, 'CSE', NULL, 'Hyderabad'),
+    -> ('Divya', 23, 'MECH', 65, NULL),
+    -> ('Kiran', 22, 'ECE', 75, 'Pune'),
+    -> ('Varun', 21, 'CSE', 92, 'Chennai'),
+    -> ('Priya', 20, 'EEE', 88, 'Delhi'),
+    -> ('John', 22, 'MECH', 55, 'Mumbai'),
+    -> ('Rekha', 21, 'ECE', 75, 'Pune'),
+    -> ('Ramesh', 23, 'EEE', NULL, 'Delhi');
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select*from students;
++-----------+--------+------+------------+-------+-----------+
+| StudentID | Name   | Age  | Department | Marks | City      |
++-----------+--------+------+------------+-------+-----------+
+|         1 | Anil   |   20 | CSE        |    85 | Hyderabad |
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai    |
+|         3 | Ravi   |   20 | CSE        |  NULL | Hyderabad |
+|         4 | Divya  |   23 | MECH       |    65 | NULL      |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune      |
+|         6 | Varun  |   21 | CSE        |    92 | Chennai   |
+|         7 | Priya  |   20 | EEE        |    88 | Delhi     |
+|         8 | John   |   22 | MECH       |    55 | Mumbai    |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune      |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi     |
++-----------+--------+------+------------+-------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select*from students where marks>80;
++-----------+-------+------+------------+-------+-----------+
+| StudentID | Name  | Age  | Department | Marks | City      |
++-----------+-------+------+------------+-------+-----------+
+|         1 | Anil  |   20 | CSE        |    85 | Hyderabad |
+|         6 | Varun |   21 | CSE        |    92 | Chennai   |
+|         7 | Priya |   20 | EEE        |    88 | Delhi     |
++-----------+-------+------+------------+-------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select*from students where age>20;
++-----------+--------+------+------------+-------+---------+
+| StudentID | Name   | Age  | Department | Marks | City    |
++-----------+--------+------+------------+-------+---------+
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai  |
+|         4 | Divya  |   23 | MECH       |    65 | NULL    |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune    |
+|         6 | Varun  |   21 | CSE        |    92 | Chennai |
+|         8 | John   |   22 | MECH       |    55 | Mumbai  |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune    |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi   |
++-----------+--------+------+------------+-------+---------+
+7 rows in set (0.00 sec)
+
+mysql> select*from students where city="delhi";
++-----------+--------+------+------------+-------+-------+
+| StudentID | Name   | Age  | Department | Marks | City  |
++-----------+--------+------+------------+-------+-------+
+|         7 | Priya  |   20 | EEE        |    88 | Delhi |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi |
++-----------+--------+------+------------+-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select*from students where "department=cse";
+Empty set, 1 warning (0.00 sec)
+
+mysql> select*from students where department="cse";
++-----------+-------+------+------------+-------+-----------+
+| StudentID | Name  | Age  | Department | Marks | City      |
++-----------+-------+------+------------+-------+-----------+
+|         1 | Anil  |   20 | CSE        |    85 | Hyderabad |
+|         3 | Ravi  |   20 | CSE        |  NULL | Hyderabad |
+|         6 | Varun |   21 | CSE        |    92 | Chennai   |
++-----------+-------+------+------------+-------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select*from students where department="cse" and marks>90;
++-----------+-------+------+------------+-------+---------+
+| StudentID | Name  | Age  | Department | Marks | City    |
++-----------+-------+------+------------+-------+---------+
+|         6 | Varun |   21 | CSE        |    92 | Chennai |
++-----------+-------+------+------------+-------+---------+
+1 row in set (0.00 sec)
+
+mysql> select department,count(*)as total_students from students group by department;
++------------+----------------+
+| department | total_students |
++------------+----------------+
+| CSE        |              3 |
+| ECE        |              3 |
+| MECH       |              2 |
+| EEE        |              2 |
++------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select department,avg(marks)as avg_marks from students group by department;
++------------+-----------+
+| department | avg_marks |
++------------+-----------+
+| CSE        |   88.5000 |
+| ECE        |   75.0000 |
+| MECH       |   60.0000 |
+| EEE        |   88.0000 |
++------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select department,max(marks)as max_marks from students group by department;
++------------+-----------+
+| department | max_marks |
++------------+-----------+
+| CSE        |        92 |
+| ECE        |        75 |
+| MECH       |        65 |
+| EEE        |        88 |
++------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select department,min(marks)as min_marks from students group by department;
++------------+-----------+
+| department | min_marks |
++------------+-----------+
+| CSE        |        85 |
+| ECE        |        75 |
+| MECH       |        55 |
+| EEE        |        88 |
++------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select department,sum(marks)as total_marks from students group by department;
++------------+-------------+
+| department | total_marks |
++------------+-------------+
+| CSE        |         177 |
+| ECE        |         225 |
+| MECH       |         120 |
+| EEE        |          88 |
++------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select city,count(*)as total_students from students group by city;
++-----------+----------------+
+| city      | total_students |
++-----------+----------------+
+| Hyderabad |              2 |
+| Mumbai    |              2 |
+| NULL      |              1 |
+| Pune      |              2 |
+| Chennai   |              1 |
+| Delhi     |              2 |
++-----------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select department,count(*)as total_students from students group by department having total_students>2;
++------------+----------------+
+| department | total_students |
++------------+----------------+
+| CSE        |              3 |
+| ECE        |              3 |
++------------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select department,avg(marks)as avg_marks from students group by department having avg_marks>75;
++------------+-----------+
+| department | avg_marks |
++------------+-----------+
+| CSE        |   88.5000 |
+| EEE        |   88.0000 |
++------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select city,count(*)as total_students from students group by city having total_students>1;
++-----------+----------------+
+| city      | total_students |
++-----------+----------------+
+| Hyderabad |              2 |
+| Mumbai    |              2 |
+| Pune      |              2 |
+| Delhi     |              2 |
++-----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select department,sum(marks)as total_marks from students group by department having total_marks>150;
++------------+-------------+
+| department | total_marks |
++------------+-------------+
+| CSE        |         177 |
+| ECE        |         225 |
++------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select city,avg(marks)as avg_marks from students group by city having avg_marks>70;
++-----------+-----------+
+| city      | avg_marks |
++-----------+-----------+
+| Hyderabad |   85.0000 |
+| Pune      |   75.0000 |
+| Chennai   |   92.0000 |
+| Delhi     |   88.0000 |
++-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select department,min(marks)as min_marks from students group by department having min_marks<60;
++------------+-----------+
+| department | min_marks |
++------------+-----------+
+| MECH       |        55 |
++------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select department,max(marks)as max_marks from students group by department having max_marks>90;
++------------+-----------+
+| department | max_marks |
++------------+-----------+
+| CSE        |        92 |
++------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select city,sum(marks)as total_marks from students group by city having total_marks>100;
++--------+-------------+
+| city   | total_marks |
++--------+-------------+
+| Mumbai |         130 |
+| Pune   |         150 |
++--------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from students order by name;
++-----------+--------+------+------------+-------+-----------+
+| StudentID | Name   | Age  | Department | Marks | City      |
++-----------+--------+------+------------+-------+-----------+
+|         1 | Anil   |   20 | CSE        |    85 | Hyderabad |
+|         4 | Divya  |   23 | MECH       |    65 | NULL      |
+|         8 | John   |   22 | MECH       |    55 | Mumbai    |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune      |
+|         7 | Priya  |   20 | EEE        |    88 | Delhi     |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi     |
+|         3 | Ravi   |   20 | CSE        |  NULL | Hyderabad |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune      |
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai    |
+|         6 | Varun  |   21 | CSE        |    92 | Chennai   |
++-----------+--------+------+------------+-------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select*from students order by name desc;
++-----------+--------+------+------------+-------+-----------+
+| StudentID | Name   | Age  | Department | Marks | City      |
++-----------+--------+------+------------+-------+-----------+
+|         6 | Varun  |   21 | CSE        |    92 | Chennai   |
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai    |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune      |
+|         3 | Ravi   |   20 | CSE        |  NULL | Hyderabad |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi     |
+|         7 | Priya  |   20 | EEE        |    88 | Delhi     |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune      |
+|         8 | John   |   22 | MECH       |    55 | Mumbai    |
+|         4 | Divya  |   23 | MECH       |    65 | NULL      |
+|         1 | Anil   |   20 | CSE        |    85 | Hyderabad |
++-----------+--------+------+------------+-------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select*from students order by city;
++-----------+--------+------+------------+-------+-----------+
+| StudentID | Name   | Age  | Department | Marks | City      |
++-----------+--------+------+------------+-------+-----------+
+|         4 | Divya  |   23 | MECH       |    65 | NULL      |
+|         6 | Varun  |   21 | CSE        |    92 | Chennai   |
+|         7 | Priya  |   20 | EEE        |    88 | Delhi     |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi     |
+|         1 | Anil   |   20 | CSE        |    85 | Hyderabad |
+|         3 | Ravi   |   20 | CSE        |  NULL | Hyderabad |
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai    |
+|         8 | John   |   22 | MECH       |    55 | Mumbai    |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune      |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune      |
++-----------+--------+------+------------+-------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select*from students order by age desc;
++-----------+--------+------+------------+-------+-----------+
+| StudentID | Name   | Age  | Department | Marks | City      |
++-----------+--------+------+------------+-------+-----------+
+|         4 | Divya  |   23 | MECH       |    65 | NULL      |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi     |
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai    |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune      |
+|         8 | John   |   22 | MECH       |    55 | Mumbai    |
+|         6 | Varun  |   21 | CSE        |    92 | Chennai   |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune      |
+|         1 | Anil   |   20 | CSE        |    85 | Hyderabad |
+|         3 | Ravi   |   20 | CSE        |  NULL | Hyderabad |
+|         7 | Priya  |   20 | EEE        |    88 | Delhi     |
++-----------+--------+------+------------+-------+-----------+
+10 rows in set (0.00 sec)
+
+
+EXECUTION ORDER OF CLAUSES;--
+1. FROM
+2.WHERE
+3.GROUP BY
+4.HAVING
+5.SELECT
+6.ORDER BY
+
+ select department,avg(marks)as avg_marks from students where age>20 group by department having avg_marks>70 order by avg_marks desc;
++------------+-----------+
+| department | avg_marks |
++------------+-----------+
+| CSE        |   92.0000 |
+| ECE        |   75.0000 |
++------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select city,count(*)as total_students from students where marks>70 group by city having total_students>1 order by total_students;
++------+----------------+
+| city | total_students |
++------+----------------+
+| Pune |              2 |
++------+----------------+
+1 row in set (0.00 sec)
+
+mysql> select department,sum(marks)as total_marks from students where city in('hyderabad','pune') group by department having total_marks>100 order by total_marks desc;
++------------+-------------+
+| department | total_marks |
++------------+-------------+
+| ECE        |         150 |
++------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select city,max(marks)as max_marks from students where department in('ece') group by city having max_marks>70 order by max_marks desc;
++--------+-----------+
+| city   | max_marks |
++--------+-----------+
+| Mumbai |        75 |
+| Pune   |        75 |
++--------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select department,avg(age)as avg_age from students where city in('not null') group by department having avg_age>20 order by avg_age desc;
+Empty set (0.00 sec)
+-------------------------------------------------
+DATE & TIME FUNCTIONS:--
+--> CURDATE()--> current date
+--> CURTIME()--> current time
+--> NOW()--> current date nd time
+--> DATE()--> extracted date part
+--> time()--> extracted time part
+--> YEAR()--> extract year
+--> month()--> extract month
+--> day()/dayofmonth()--> extract day of the month
+--> week()--> extract week no.
+--> dayofweek()--> extract day of the week
+--> date_add()--> add time to a date
+--> date_sub()--> subtract time frm a date
+--> datediff()--> difference btw 2 dates
+--> timestampdiff()--> diff btw 2 datetime values
+OPERATIONS:--
+
+select curdate() as current__date;
++---------------+
+| current__date |
++---------------+
+| 2026-09-16    |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select curtime() as current__time;
++---------------+
+| current__time |
++---------------+
+| 14:21:16      |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select now() as current_date_time;
++---------------------+
+| current_date_time   |
++---------------------+
+| 2026-09-16 14:21:46 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select sysdate();
++---------------------+
+| sysdate()           |
++---------------------+
+| 2026-09-16 14:22:03 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select date(now())as extracted_date;
++----------------+
+| extracted_date |
++----------------+
+| 2026-09-16     |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select time(now())as extracted_time;
++----------------+
+| extracted_time |
++----------------+
+| 14:24:33       |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select year(now())as year_part;
++-----------+
+| year_part |
++-----------+
+|      2026 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select month(now())as month_part;
++------------+
+| month_part |
++------------+
+|          9 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select day(now())as day_part;
++----------+
+| day_part |
++----------+
+|       16 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select week(now())as week_number;
++-------------+
+| week_number |
++-------------+
+|          37 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select dayofweek(now())as dayofweek;
++-----------+
+| dayofweek |
++-----------+
+|         4 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select datediff(NOW(), '2024-03-20')as days_diff;
++-----------+
+| days_diff |
++-----------+
+|       910 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select str_to_date('2024-03-20','%Y-%m-&d')as formatted_date;
++----------------+
+| formatted_date |
++----------------+
+| NULL           |
++----------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> select date_format(now(),'%W,%M,%d,%Y')as formatted_date;
++-----------------------------+
+| formatted_date              |
++-----------------------------+
+| Wednesday,September,16,2026 |
++-----------------------------+
+1 row in set (0.00 sec)
+
+mysql> select last_day(now())as last_day_of_month;
++-------------------+
+| last_day_of_month |
++-------------------+
+| 2026-09-30        |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select makedate(2024,60)as result_date;
++-------------+
+| result_date |
++-------------+
+| 2024-02-29  |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select makedate(2025,60)as result_date;
++-------------+
+| result_date |
++-------------+
+| 2025-03-01  |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select maketime(14,25,12)as result_time;
++-------------+
+| result_time |
++-------------+
+| 14:25:12    |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select monthname(now())as month_name;
++------------+
+| month_name |
++------------+
+| September  |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select dayname(now())as day_name;
++-----------+
+| day_name  |
++-----------+
+| Wednesday |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select quarter(now())as quarter_number;
++----------------+
+| quarter_number |
++----------------+
+|              3 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select time_to_sec('01:01:01')as time_value;
++------------+
+| time_value |
++------------+
+|       3661 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select sec_to_time(3661)as time_value;
++------------+
+| time_value |
++------------+
+| 01:01:01   |
++------------+
+1 row in set (0.00 sec)
+
+ CREATE TABLE employee_attendance
+    -> (
+    ->  emp_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->  emp_name VARCHAR(100),
+    ->  department VARCHAR(50),
+    ->  joining_date DATE,
+    ->  birth_date DATE,
+    ->  login_time DATETIME,
+    ->  logout_time DATETIME,
+    ->  salary DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> INSERT INTO employee_attendance
+    -> (emp_name, department, joining_date, birth_date, login_time, logout_time, salary)
+    -> VALUES
+    -> ('Rahul','IT','2021-06-15','1998-05-10','2024-11-20 09:05:10','2024-11-20 18:15:30',55000),
+    -> ('Sneha','HR','2020-03-21','1996-11-18','2024-11-21 08:55:20','2024-11-21 17:45:50',48000),
+    -> ('Arjun','Finance','2019-08-10','1994-07-30','2024-11-22 09:15:45','2024-11-22 18:35:20',62000),
+    -> ('Priya','IT','2022-01-05','2000-01-25','2024-11-23 09:00:00','2024-11-23 17:55:40',51000),
+    -> ('Kiran','Admin','2018-12-11','1992-09-15','2024-11-24 08:40:30','2024-11-24 17:30:00',45000),
+    -> ('Anjali','Testing','2023-04-17','1999-12-20','2024-11-25 09:12:10','2024-11-25 18:05:00',47000),
+    -> ('Vijay','IT','2021-09-14','1997-04-08','2024-11-26 09:08:15','2024-11-26 18:20:40',59000),
+    -> ('Divya','HR','2019-10-19','1995-06-11','2024-11-27 08:50:30','2024-11-27 17:42:15',50000),
+    -> ('Ramesh','Finance','2017-07-01','1991-08-14','2024-11-28 09:03:00','2024-11-28 18:12:00',70000),
+    -> ('Pooja','Testing','2022-05-09','2001-03-19','2024-11-29 09:18:50','2024-11-29 18:25:10',53000);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select*from employee_attendance;
++--------+----------+------------+--------------+------------+---------------------+---------------------+----------+
+| emp_id | emp_name | department | joining_date | birth_date | login_time          | logout_time         | salary   |
++--------+----------+------------+--------------+------------+---------------------+---------------------+----------+
+|      1 | Rahul    | IT         | 2021-06-15   | 1998-05-10 | 2024-11-20 09:05:10 | 2024-11-20 18:15:30 | 55000.00 |
+|      2 | Sneha    | HR         | 2020-03-21   | 1996-11-18 | 2024-11-21 08:55:20 | 2024-11-21 17:45:50 | 48000.00 |
+|      3 | Arjun    | Finance    | 2019-08-10   | 1994-07-30 | 2024-11-22 09:15:45 | 2024-11-22 18:35:20 | 62000.00 |
+|      4 | Priya    | IT         | 2022-01-05   | 2000-01-25 | 2024-11-23 09:00:00 | 2024-11-23 17:55:40 | 51000.00 |
+|      5 | Kiran    | Admin      | 2018-12-11   | 1992-09-15 | 2024-11-24 08:40:30 | 2024-11-24 17:30:00 | 45000.00 |
+|      6 | Anjali   | Testing    | 2023-04-17   | 1999-12-20 | 2024-11-25 09:12:10 | 2024-11-25 18:05:00 | 47000.00 |
+|      7 | Vijay    | IT         | 2021-09-14   | 1997-04-08 | 2024-11-26 09:08:15 | 2024-11-26 18:20:40 | 59000.00 |
+|      8 | Divya    | HR         | 2019-10-19   | 1995-06-11 | 2024-11-27 08:50:30 | 2024-11-27 17:42:15 | 50000.00 |
+|      9 | Ramesh   | Finance    | 2017-07-01   | 1991-08-14 | 2024-11-28 09:03:00 | 2024-11-28 18:12:00 | 70000.00 |
+|     10 | Pooja    | Testing    | 2022-05-09   | 2001-03-19 | 2024-11-29 09:18:50 | 2024-11-29 18:25:10 | 53000.00 |
++--------+----------+------------+--------------+------------+---------------------+---------------------+----------+
+10 rows in set (0.00 sec)
+
+ select emp_name,date(login_time)as login_time_only from employee_attendance;
++----------+-----------------+
+| emp_name | login_time_only |
++----------+-----------------+
+| Rahul    | 2024-11-20      |
+| Sneha    | 2024-11-21      |
+| Arjun    | 2024-11-22      |
+| Priya    | 2024-11-23      |
+| Kiran    | 2024-11-24      |
+| Anjali   | 2024-11-25      |
+| Vijay    | 2024-11-26      |
+| Divya    | 2024-11-27      |
+| Ramesh   | 2024-11-28      |
+| Pooja    | 2024-11-29      |
++----------+-----------------+
+10 rows in set (0.00 sec)
+
+ select emp_name,year(joining_date)as login_year from employee_attendance;
++----------+------------+
+| emp_name | login_year |
++----------+------------+
+| Rahul    |       2021 |
+| Sneha    |       2020 |
+| Arjun    |       2019 |
+| Priya    |       2022 |
+| Kiran    |       2018 |
+| Anjali   |       2023 |
+| Vijay    |       2021 |
+| Divya    |       2019 |
+| Ramesh   |       2017 |
+| Pooja    |       2022 |
++----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select emp_name,month(birth_date)as birth_month from employee_attendance;
++----------+-------------+
+| emp_name | birth_month |
++----------+-------------+
+| Rahul    |           5 |
+| Sneha    |          11 |
+| Arjun    |           7 |
+| Priya    |           1 |
+| Kiran    |           9 |
+| Anjali   |          12 |
+| Vijay    |           4 |
+| Divya    |           6 |
+| Ramesh   |           8 |
+| Pooja    |           3 |
++----------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select emp_name,day(birth_date)as birth_day from employee_attendance;
++----------+-----------+
+| emp_name | birth_day |
++----------+-----------+
+| Rahul    |        10 |
+| Sneha    |        18 |
+| Arjun    |        30 |
+| Priya    |        25 |
+| Kiran    |        15 |
+| Anjali   |        20 |
+| Vijay    |         8 |
+| Divya    |        11 |
+| Ramesh   |        14 |
+| Pooja    |        19 |
++----------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select emp_name,week(joining_date)as week_no from employee_attendance;
++----------+---------+
+| emp_name | week_no |
++----------+---------+
+| Rahul    |      24 |
+| Sneha    |      11 |
+| Arjun    |      31 |
+| Priya    |       1 |
+| Kiran    |      49 |
+| Anjali   |      16 |
+| Vijay    |      37 |
+| Divya    |      41 |
+| Ramesh   |      26 |
+| Pooja    |      19 |
++----------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select emp_name,weekday(joining_date)as weekly_no from employee_attendance;
++----------+-----------+
+| emp_name | weekly_no |
++----------+-----------+
+| Rahul    |         1 |
+| Sneha    |         5 |
+| Arjun    |         5 |
+| Priya    |         2 |
+| Kiran    |         1 |
+| Anjali   |         0 |
+| Vijay    |         1 |
+| Divya    |         5 |
+| Ramesh   |         5 |
+| Pooja    |         0 |
++----------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select emp_name,date_add(joining_date,interval 30 day)as monthafterjoiningdate from employee_attendance;
++----------+-----------------------+
+| emp_name | monthafterjoiningdate |
++----------+-----------------------+
+| Rahul    | 2021-07-15            |
+| Sneha    | 2020-04-20            |
+| Arjun    | 2019-09-09            |
+| Priya    | 2022-02-04            |
+| Kiran    | 2019-01-10            |
+| Anjali   | 2023-05-17            |
+| Vijay    | 2021-10-14            |
+| Divya    | 2019-11-18            |
+| Ramesh   | 2017-07-31            |
+| Pooja    | 2022-06-08            |
++----------+-----------------------+
+10 rows in set (0.00 sec)
+
+mysql> select emp_name,date_sub(joining_date,interval 15 day)as monthafterjoiningdate from employee_attendance;
++----------+-----------------------+
+| emp_name | monthafterjoiningdate |
++----------+-----------------------+
+| Rahul    | 2021-05-31            |
+| Sneha    | 2020-03-06            |
+| Arjun    | 2019-07-26            |
+| Priya    | 2021-12-21            |
+| Kiran    | 2018-11-26            |
+| Anjali   | 2023-04-02            |
+| Vijay    | 2021-08-30            |
+| Divya    | 2019-10-04            |
+| Ramesh   | 2017-06-16            |
+| Pooja    | 2022-04-24            |
++----------+-----------------------+
+10 rows in set (0.00 sec)
+
+mysql> select emp_name,joining_date from employee_attendance where year(joining_date)=year(curdate());
+Empty set (0.00 sec)
+
+select emp_name,birth_date from employee_attendance where month(birth_date)=11;
++----------+------------+
+| emp_name | birth_date |
++----------+------------+
+| Sneha    | 1996-11-18 |
++----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select emp_name,joining_date from employee_attendance where monthname(joining_date) = 'june';
++----------+--------------+
+| emp_name | joining_date |
++----------+--------------+
+| Rahul    | 2021-06-15   |
++----------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select emp_name,birth_date from employee_attendance where day(birth_date)=10;
++----------+------------+
+| emp_name | birth_date |
++----------+------------+
+| Rahul    | 1998-05-10 |
++----------+------------+
+1 row in set (0.00 sec)
+
+select emp_name,joining_date from employee_attendance where quarter(joining_date) = 2;
++----------+--------------+
+| emp_name | joining_date |
++----------+--------------+
+| Rahul    | 2021-06-15   |
+| Anjali   | 2023-04-17   |
+| Pooja    | 2022-05-09   |
++----------+--------------+
+3 rows in set (0.00 sec)
+
+select emp_name,timestampdiff(year,birth_date,curdate())as age_years from employee_attendance;
++----------+-----------+
+| emp_name | age_years |
++----------+-----------+
+| Rahul    |        28 |
+| Sneha    |        29 |
+| Arjun    |        32 |
+| Priya    |        26 |
+| Kiran    |        34 |
+| Anjali   |        26 |
+| Vijay    |        29 |
+| Divya    |        31 |
+| Ramesh   |        35 |
+| Pooja    |        25 |
++----------+-----------+
+10 rows in set (0.00 sec)
+
+select emp_name,joining_date from employee_attendance where timestampdiff(year,joining_date,curdate()) > 3;
++----------+--------------+
+| emp_name | joining_date |
++----------+--------------+
+| Rahul    | 2021-06-15   |
+| Sneha    | 2020-03-21   |
+| Arjun    | 2019-08-10   |
+| Priya    | 2022-01-05   |
+| Kiran    | 2018-12-11   |
+| Vijay    | 2021-09-14   |
+| Divya    | 2019-10-19   |
+| Ramesh   | 2017-07-01   |
+| Pooja    | 2022-05-09   |
++----------+--------------+
+9 rows in set (0.00 sec)
+
+select emp_name,login_time from employee_attendance where time(login_time)>'9:10:00';
+Empty set (0.00 sec)
+
+mysql> select emp_name,joining_date from employee_attendance where dayname(joining_date) ='monday';
++----------+--------------+
+| emp_name | joining_date |
++----------+--------------+
+| Anjali   | 2023-04-17   |
+| Pooja    | 2022-05-09   |
++----------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select emp_name,birth_date from employee_attendance where monthname(birth_date)like 'j%';
++----------+------------+
+| emp_name | birth_date |
++----------+------------+
+| Arjun    | 1994-07-30 |
+| Priya    | 2000-01-25 |
+| Divya    | 1995-06-11 |
++----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select emp_name,joining_date from employee_attendance where week(joining_date) =25;
+Empty set (0.00 sec)
+
+mysql> select emp_name,last_day(birth_date)as last_day_birth_month from employee_attendance;
++----------+----------------------+
+| emp_name | last_day_birth_month |
++----------+----------------------+
+| Rahul    | 1998-05-31           |
+| Sneha    | 1996-11-30           |
+| Arjun    | 1994-07-31           |
+| Priya    | 2000-01-31           |
+| Kiran    | 1992-09-30           |
+| Anjali   | 1999-12-31           |
+| Vijay    | 1997-04-30           |
+| Divya    | 1995-06-30           |
+| Ramesh   | 1991-08-31           |
+| Pooja    | 2001-03-31           |
++----------+----------------------+
+10 rows in set (0.00 sec)
+
+****NORMALISATION****
+
+
+mysql> CREATE TABLE student_details (
+    ->     student_id INT,
+    ->     student_name VARCHAR(50),
+    ->     courses VARCHAR(100),
+    ->     trainers VARCHAR(100),
+    ->     trainer_phones VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO student_details
+    -> VALUES
+    -> (101, 'Ravi', 'Java, Python', 'Kumar, Ramesh', '9876543210, 9876543211'),
+    -> (102, 'Priya', 'Python, SQL', 'Ramesh, Suresh', '9876543211, 9876543212'),
+    -> (103, 'Arun', 'Java, SQL', 'Kumar, Suresh', '9876543210, 9876543212');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select*from student_details;
++------------+--------------+--------------+----------------+------------------------+
+| student_id | student_name | courses      | trainers       | trainer_phones         |
++------------+--------------+--------------+----------------+------------------------+
+|        101 | Ravi         | Java, Python | Kumar, Ramesh  | 9876543210, 9876543211 |
+|        102 | Priya        | Python, SQL  | Ramesh, Suresh | 9876543211, 9876543212 |
+|        103 | Arun         | Java, SQL    | Kumar, Suresh  | 9876543210, 9876543212 |
++------------+--------------+--------------+----------------+------------------------+
+3 rows in set (0.00 sec)
+
+mysql> create table student_course_1nf(
+    -> student_id INT,
+    -> student_name varchar(50),
+    -> course varchar(30),
+    -> trainer varchar(30),
+    -> trainer_phone varchar(15)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into student_course_1nf
+    -> values
+    -> (101,'ravi','java','kumar','9867435582'),
+    -> (101,'ravi','python','ramesh','69746874554'),
+    -> (102,'usha','python','sri','98751252456'),
+    -> (102,'usha','sql','latha','59786345658'),
+    -> (103,'teju','java','kumar','9873648264'),
+    -> (103,'teju','sql','suresh','9634852676');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select*from student_course_1nf;
++------------+--------------+--------+---------+---------------+
+| student_id | student_name | course | trainer | trainer_phone |
++------------+--------------+--------+---------+---------------+
+|        101 | ravi         | java   | kumar   | 9867435582    |
+|        101 | ravi         | python | ramesh  | 69746874554   |
+|        102 | usha         | python | sri     | 98751252456   |
+|        102 | usha         | sql    | latha   | 59786345658   |
+|        103 | teju         | java   | kumar   | 9873648264    |
+|        103 | teju         | sql    | suresh  | 9634852676    |
++------------+--------------+--------+---------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> create table student_2nf(
+    -> student_id int primary key,
+    -> student_name varchar(50)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into student_2nf values
+    -> (101,'ravi'),
+    -> (102,'usha'),
+    -> (103,'teju');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select*from student_2nf;
++------------+--------------+
+| student_id | student_name |
++------------+--------------+
+|        101 | ravi         |
+|        102 | usha         |
+|        103 | teju         |
++------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> create table enrollment_2nf(
+    -> student_id int,
+    -> course varchar(30),
+    -> trainer varchar(30),
+    -> trainer_phone varchar(15),
+    -> primary key(student_id,course),
+    -> foreign key(student_id) references student_2nf(student_id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+ insert into enrollment_2nf
+    -> values
+    -> (101,'java','kumar','9867435582'),
+    -> (101,'python','ramesh','69746874554'),
+    -> (102,'python','sri','98751252456'),
+    -> (102,'sql','latha','59786345658'),
+    -> (103,'java','kumar','9873648264'),
+    -> (103,'sql','suresh','9634852676');
+Query OK, 6 rows affected (0.03 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select*from enrollment_2nf;
++------------+--------+---------+---------------+
+| student_id | course | trainer | trainer_phone |
++------------+--------+---------+---------------+
+|        101 | java   | kumar   | 9867435582    |
+|        101 | python | ramesh  | 69746874554   |
+|        102 | python | sri     | 98751252456   |
+|        102 | sql    | latha   | 59786345658   |
+|        103 | java   | kumar   | 9873648264    |
+|        103 | sql    | suresh  | 9634852676    |
++------------+--------+---------+---------------+
+6 rows in set (0.00 sec)
+
+****QUERIES AND SUB QUERIES****
+
+SUBQUERY-- It is a query inside another query. It is written inside paranthesis() and its result is used by the outer query. It is also called as inner query, nested query nd inner select.
+PURPOSE OF SUBQUERY:--
+1. To break down complex prblms into smaller
+2. To use the result of one query as input to another
+3. To avoid multiple steps(write in a single query instead of temp tables).
+General Syntax:--
+select column-list from table where column operator(select column from table where condition);
+
+Types of Sub queries:
+1. single row sub query
+2. multi row
+3. nested
+4. corelated
+5. exists/non-exists
+
+1. SINGLE ROW SUBQUERY:-- They return exactly one row nd column. They use comparision operators like =,>,>=,<,<=,!=
+CHARACHTERISTICS:--
+1. Returns only 1 value
+2. Can use single value comparision operators
+3. if subquery returns no rows or multiple rows it causes an error
+SYNTAX:--
+select columns from table where column operator(select column from table where condition);
+
+
+2. Multi row:-- (a) multi-row subquery IN:-- It returns more than one row. The in operator is used when we want to compare a value with multiple values returned by the subquery.
+CHARACHTERISTICS:--
+Returns multiple rows
+Use the IN Operator
+checks whether a value exists in the list returned by the subquery.
+equivalent to multiple OR conditions
+most commonly used for matching values
+SYNTAX:--
+select column from a table where column IN(select column from table where condition);
+
+(b) multi-row subquery(any/some):-- returns multiple rows when using ANY or SOME, the condition is true if it matches atleast one value returned by the subquery
+CHARACHTERISTICS:--
+Returns multiple values
+ANY and SOME are interchangeable
+condition is true if any of the values satisfy the condition
+often used with IN, >ANY, >ANY,>=ANY...etc
+SYNTAX:--
+select column from table where column operator any/some(select column from table where condition);
+
+(c) multi-row subquery all:-- the all operator means the condition must be true for all values returned by the subquery result
+CHARACHTERISTICS:--
+Conditions must be true for all values in the subquery result
+often used with >all,<all,>=all,<=all
+>all means greater than the maximum value
+SYNTAX:--
+select column from table where column operator all(select column from table where condition);
+
+3. Nested:-- They r subqueries within subqueries nd can be of multiple levels deep nd are executed from innermost to the outermost
+CHARACHTERISTICS:--
+Multiple levels of nesting
+inner queries execute first
+can combine different types of subqueries
+useful for complex condition
+SYNTAX:--
+select column-list from table where column=(select column from table where column=(select column from table where condition));
+
+
+4. Corelated:-- They refer columns from outer queries unlike regular subqueries tht execute once. They execute once per each row processed by the outer query
+Charachteristics:--
+Reference col frm outer query
+executes multiple times(once per outer row)
+cannot be executed independently
+often used with EXISTS/NOT EXISTS
+generally slower than non corelated subqueries
+Syntax:--
+select column from table1 outer_alias where condition(select column from table2 inner_alias where inner_alias.column=outer_alias.column);
+
+
+5.exists/non-exists:-- Exists is used to test whether a subquery returns any rows. It returns true if the subquery returns atleast one row. False otherwise
+Non-exists returns true if the subquery returns no rows
+CHARACHTERISTICS:--
+Returns TRUE/False(Boolean result)
+more efficient than IN for large datasets
+often used with corelated subqueries
+stops execution as soon as first match is found
+select clauses in exists doesn't matter(often use select 1)
+SYNTAX:--
+select columns from table1 where exists(select1 from table2 where condition);
+
+SYNTAX:--
+select columns from table1 where not exists(select1 from table2 where condition);
+
+OPERATIONS:--
+
+CREATE TABLE Customers (
+    ->   customer_id    INT PRIMARY KEY,
+    ->   customer_name  VARCHAR(50),
+    ->   city           VARCHAR(50),
+    ->   customer_type  VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> CREATE TABLE Products (
+    ->   product_id     INT PRIMARY KEY,
+    ->   product_name   VARCHAR(50),
+    ->   category       VARCHAR(30),
+    ->   price          DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> CREATE TABLE Orders (
+    ->   order_id       INT PRIMARY KEY,
+    ->   customer_id    INT REFERENCES Customers(customer_id),
+    ->   product_id     INT REFERENCES Products(product_id),
+    ->   quantity       INT,
+    ->   order_date     DATE,
+    ->   amount         DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Customers (customer_id, customer_name, city, customer_type) VALUES (1, 'Rahul', 'Delhi', 'Premium');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO Customers (customer_id, customer_name, city, customer_type) VALUES (2, 'Meena', 'Mumbai', 'Regular');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Customers (customer_id, customer_name, city, customer_type) VALUES (3, 'Arjun', 'Bangalore', 'Premium');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Customers (customer_id, customer_name, city, customer_type) VALUES (4, 'Kavya', 'Delhi', 'Regular');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Customers (customer_id, customer_name, city, customer_type) VALUES (5, 'Suresh', 'Chennai', 'Premium');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Customers (customer_id, customer_name, city, customer_type) VALUES (6, 'Anjali', 'Mumbai', 'Regular');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Customers (customer_id, customer_name, city, customer_type) VALUES (7, 'Vikram', 'Delhi', 'Regular');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Customers (customer_id, customer_name, city, customer_type) VALUES (8, 'Pooja', 'Bangalore', 'Premium');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Customers (customer_id, customer_name, city, customer_type) VALUES (9, 'Devi', 'Chennai', 'Regular');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO Products (product_id, product_name, category, price) VALUES (1, 'Laptop', 'Electronics', 55000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO Products (product_id, product_name, category, price) VALUES (2, 'Mobile', 'Electronics', 25000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO Products (product_id, product_name, category, price) VALUES (3, 'Chair', 'Furniture', 7000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Products (product_id, product_name, category, price) VALUES (4, 'Table', 'Furniture', 9000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Products (product_id, product_name, category, price) VALUES (5, 'Headphones', 'Electronics', 3000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Products (product_id, product_name, category, price) VALUES (6, 'Bookshelf', 'Furniture', 6000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (1, 1, 1, 1, '2023-01-05', 55000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (2, 2, 2, 1, '2023-01-10', 25000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (3, 3, 3, 2, '2023-02-01', 14000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (4, 1, 5, 2, '2023-02-15', 6000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (5, 4, 4, 1, '2023-03-03', 9000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (6, 5, 2, 2, '2023-03-20', 50000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (7, 6, 4, 3, '2023-04-02', 18000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (8, 3, 5, 1, '2023-04-15', 3000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (9, 7, 3, 1, '2023-05-01', 7000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (10, 8, 1, 1, '2023-05-20', 54000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (11, 2, 3, 2, '2023-06-02', 12000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO Orders (order_id, customer_id, product_id, quantity, order_date, amount) VALUES (12, 5, 4, 1, '2023-06-15', 8500);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  select*from products;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?select*from products' at line 1
+mysql> select*from Products;
++------------+--------------+-------------+----------+
+| product_id | product_name | category    | price    |
++------------+--------------+-------------+----------+
+|          1 | Laptop       | Electronics | 55000.00 |
+|          2 | Mobile       | Electronics | 25000.00 |
+|          3 | Chair        | Furniture   |  7000.00 |
+|          4 | Table        | Furniture   |  9000.00 |
+|          5 | Headphones   | Electronics |  3000.00 |
+|          6 | Bookshelf    | Furniture   |  6000.00 |
++------------+--------------+-------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select*from Customers;
++-------------+---------------+-----------+---------------+
+| customer_id | customer_name | city      | customer_type |
++-------------+---------------+-----------+---------------+
+|           1 | Rahul         | Delhi     | Premium       |
+|           2 | Meena         | Mumbai    | Regular       |
+|           3 | Arjun         | Bangalore | Premium       |
+|           4 | Kavya         | Delhi     | Regular       |
+|           5 | Suresh        | Chennai   | Premium       |
+|           6 | Anjali        | Mumbai    | Regular       |
+|           7 | Vikram        | Delhi     | Regular       |
+|           8 | Pooja         | Bangalore | Premium       |
+|           9 | Devi          | Chennai   | Regular       |
++-------------+---------------+-----------+---------------+
+9 rows in set (0.00 sec)
+
+mysql> select*from Orders;
++----------+-------------+------------+----------+------------+----------+
+| order_id | customer_id | product_id | quantity | order_date | amount   |
++----------+-------------+------------+----------+------------+----------+
+|        1 |           1 |          1 |        1 | 2023-01-05 | 55000.00 |
+|        2 |           2 |          2 |        1 | 2023-01-10 | 25000.00 |
+|        3 |           3 |          3 |        2 | 2023-02-01 | 14000.00 |
+|        4 |           1 |          5 |        2 | 2023-02-15 |  6000.00 |
+|        5 |           4 |          4 |        1 | 2023-03-03 |  9000.00 |
+|        6 |           5 |          2 |        2 | 2023-03-20 | 50000.00 |
+|        7 |           6 |          4 |        3 | 2023-04-02 | 18000.00 |
+|        8 |           3 |          5 |        1 | 2023-04-15 |  3000.00 |
+|        9 |           7 |          3 |        1 | 2023-05-01 |  7000.00 |
+|       10 |           8 |          1 |        1 | 2023-05-20 | 54000.00 |
+|       11 |           2 |          3 |        2 | 2023-06-02 | 12000.00 |
+|       12 |           5 |          4 |        1 | 2023-06-15 |  8500.00 |
++----------+-------------+------------+----------+------------+----------+
+12 rows in set (0.00 sec)
+
+SELECT PRODUCT_NAME,PRICE FROM PRODUCTS WHERE PRICE=(SELECT MAX(PRICE)FROM PRODUCTS);
++--------------+----------+
+| PRODUCT_NAME | PRICE    |
++--------------+----------+
+| Laptop       | 55000.00 |
++--------------+----------+
+1 row in set (0.01 sec)
+
+SELECT ORDER_ID,CUSTOMER_ID,AMOUNT FROM ORDERS WHERE AMOUNT=(SELECT MIN(AMOUNT)FROM ORDERS);
++----------+-------------+---------+
+| ORDER_ID | CUSTOMER_ID | AMOUNT  |
++----------+-------------+---------+
+|        8 |           3 | 3000.00 |
++----------+-------------+---------+
+1 row in set (0.00 sec)
+
+SELECT CUSTOMER_NAME FROM CUSTOMERS WHERE CUSTOMER_ID=(SELECT CUSTOMER_ID FROM ORDERS WHERE ORDER_ID=5);
++---------------+
+| CUSTOMER_NAME |
++---------------+
+| Kavya         |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT CATEGORY FROM PRODUCTS WHERE PRODUCT_ID=(SELECT PRODUCT_ID FROM ORDERS WHERE ORDER_ID=1);
++-------------+
+| CATEGORY    |
++-------------+
+| Electronics |
++-------------+
+1 row in set (0.00 sec)
+
+ SELECT CUSTOMER_NAME FROM CUSTOMERS WHERE CITY IN('DELHI','MUMBAI');
++---------------+
+| CUSTOMER_NAME |
++---------------+
+| Rahul         |
+| Meena         |
+| Kavya         |
+| Anjali        |
+| Vikram        |
++---------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT PRODUCT_NAME FROM PRODUCTS WHERE PRODUCT_ID IN(SELECT PRODUCT_ID FROM ORDERS);
++--------------+
+| PRODUCT_NAME |
++--------------+
+| Laptop       |
+| Mobile       |
+| Chair        |
+| Table        |
+| Headphones   |
++--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT CUSTOMER_NAME FROM CUSTOMERS WHERE CUSTOMER_ID IN(SELECT CUSTOMER_ID FROM ORDERS);
++---------------+
+| CUSTOMER_NAME |
++---------------+
+| Rahul         |
+| Meena         |
+| Arjun         |
+| Kavya         |
+| Suresh        |
+| Anjali        |
+| Vikram        |
+| Pooja         |
++---------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT PRODUCT_NAME FROM PRODUCTS WHERE PRODUCT_ID NOT IN(SELECT PRODUCT_ID FROM ORDERS);
++--------------+
+| PRODUCT_NAME |
++--------------+
+| Bookshelf    |
++--------------+
+1 row in set (0.00 sec)
+
+SELECT PRODUCT_NAME,PRICE FROM PRODUCTS WHERE PRICE>ANY(SELECT PRICE FROM PRODUCTS WHERE CATEGORY='FURNITURE');
++--------------+----------+
+| PRODUCT_NAME | PRICE    |
++--------------+----------+
+| Laptop       | 55000.00 |
+| Mobile       | 25000.00 |
+| Chair        |  7000.00 |
+| Table        |  9000.00 |
++--------------+----------+
+4 rows in set (0.00 sec)
+
+SELECT ORDER_ID, AMOUNT FROM ORDERS WHERE AMOUNT > ANY(SELECT AMOUNT FROM ORDERS WHERE CUSTOMER_ID = (SELECT CUSTOMER_ID FROM CUSTOMERS WHERE CUSTOMER_NAME='ARJUN'));
++----------+----------+
+| ORDER_ID | AMOUNT   |
++----------+----------+
+|        1 | 55000.00 |
+|        2 | 25000.00 |
+|        3 | 14000.00 |
+|        4 |  6000.00 |
+|        5 |  9000.00 |
+|        6 | 50000.00 |
+|        7 | 18000.00 |
+|        9 |  7000.00 |
+|       10 | 54000.00 |
+|       11 | 12000.00 |
+|       12 |  8500.00 |
++----------+----------+
+11 rows in set (0.00 sec)
+
+select customer_name
+    -> from customers
+    -> where customer_id IN(
+    -> select customer_id from orders
+    -> where product_id=(
+    -> select product_id from products
+    -> where price=(select max(price)from products)));
++---------------+
+| customer_name |
++---------------+
+| Rahul         |
+| Pooja         |
++---------------+
+2 rows in set (0.00 sec)
+
+mysql> select customer_name
+    -> from customers c
+    -> where (select count(*)from orders o where o.customer_id=c.customer_id)>1;
++---------------+
+| customer_name |
++---------------+
+| Rahul         |
+| Meena         |
+| Arjun         |
+| Suresh        |
++---------------+
+4 rows in set (0.01 sec)
+
+mysql> select p1.product_name,p1.category,p1.price
+    -> from products p1
+    -> where 1=(
+    -> select count(*) from products p2
+    -> where p2.category=p1.category AND p2.price<p1.price
+    -> );
++--------------+-------------+----------+
+| product_name | category    | price    |
++--------------+-------------+----------+
+| Mobile       | Electronics | 25000.00 |
+| Chair        | Furniture   |  7000.00 |
++--------------+-------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select customer_name from customers c
+    -> where exists(select 1 from orders o where o.customer_id=c.customer_id);
++---------------+
+| customer_name |
++---------------+
+| Rahul         |
+| Meena         |
+| Arjun         |
+| Kavya         |
+| Suresh        |
+| Anjali        |
+| Vikram        |
+| Pooja         |
++---------------+
+8 rows in set (0.00 sec)
+
+mysql> select customer_name from customers c
+    -> where not exists(select 1 from orders o where o.customer_id=c.customer_id);
++---------------+
+| customer_name |
++---------------+
+| Devi          |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary)as second_max_salary from employees
+    -> where salary<(
+    -> select max(salary)as maximum_salary from employees);
++-------------------+
+| second_max_salary |
++-------------------+
+|          75000.00 |
++-------------------+
+1 row in set (0.02 sec)
+
+mysql> select min(salary)as second_min_salary from employees
+    -> where salary>(
+    -> select min(salary)as second_min_salary from employees);
++-------------------+
+| second_min_salary |
++-------------------+
+|          45000.00 |
++-------------------+
+1 row in set (0.00 sec)
+
+****VIEWS****
+A view is a virtual table created frm the result of select query. It doesn't normally stores the actual data separately, instead, it stores the sql query whenever u access the view, MySQL retrieves the data frm the underlying tables
+
+why do we need views?
+* simplify complex queries
+* reuse query logic
+* data security
+* simplified reporting
+Advantages of views:--
+* security
+* simplicity
+* reusability
+* 
+
+diff btw table/view:--
+ 
+TABLE                                                                                                                     VIEW
+
+physically stores data                                                                                            virtual table based on query
+can store records directly                                                                                        doesn't store separate records
+create using create table                                                                                            create using create view
+contains all table data                                                                                            can show selected rows/columns
+used fr permanent data storage                                                                                        mainly used fr abstraction, security nd reusable queries
+
+
+
+SYNTAX:-- ( create view)
+create view view_name as select column from table where condition;
+(altering view):--
+alter view view_name as select new_columns from new_tables where new_conditions;
+(drop a view):--
+drop view view_name;
+
+***STORED PROCEDURE***
+It is a named, precompiled collection of one or more sql statements tht is stored inside the database nd can be executed called whenever required. Instead of sending long block of sql frm an application every time, the application simply calls the procedure by name.
+
+Uses of stored procedure:--
+1. performance
+2. reusability
+3. security
+4. reduce network traffic
+5. maintainability
+6. consistency
+
+***TRIGGERS***
+It is a spcl type of stored program, that automatically executes (fires) in response to the specific event. Insert, Update, Delete occurring on a specified table, unlike a stored procedure. A trigger is never called directly
+
+SYNTAX:--
+DELIMITER//
+CREATE TRIGGER trigger_name
+{BEFORE|AFTER}{INSERT|UPDATE|DELETE}
+ON table_name
+FOR EACH ROW
+begin 
+    ----trigger logic
+    --- use new column name for inserted/updated values
+    --- use OLD.column_name for delete/previous values
+END//
+DELIMITE;
+
+OPERATIONS:--
+
+CREATE TABLE Employees (
+    ->     emp_id INT PRIMARY KEY,
+    ->     emp_name VARCHAR(50),
+    ->     department VARCHAR(30),
+    ->     salary DECIMAL(10,2),
+    ->     experience INT,
+    ->     city VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+INSERT INTO Employees VALUES
+    -> (101,'Rahul','IT',65000,5,'Hyderabad'),
+    -> (102,'Priya','HR',45000,3,'Chennai'),
+    -> (103,'Amit','Finance',70000,6,'Bangalore'),
+    -> (104,'Sneha','IT',80000,8,'Hyderabad'),
+    -> (105,'Kiran','Sales',40000,2,'Pune');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE Employee_Audit(
+    ->     audit_id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     emp_id INT,
+    ->     action_type VARCHAR(20),
+    ->     old_salary DECIMAL(10,2),
+    ->     new_salary DECIMAL(10,2),
+    ->     action_time DATETIME
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select*from employees;
++--------+----------+------------+----------+------------+-----------+
+| emp_id | emp_name | department | salary   | experience | city      |
++--------+----------+------------+----------+------------+-----------+
+|    101 | Rahul    | IT         | 65000.00 |          5 | Hyderabad |
+|    102 | Priya    | HR         | 45000.00 |          3 | Chennai   |
+|    103 | Amit     | Finance    | 70000.00 |          6 | Bangalore |
+|    104 | Sneha    | IT         | 80000.00 |          8 | Hyderabad |
+|    105 | Kiran    | Sales      | 40000.00 |          2 | Pune      |
++--------+----------+------------+----------+------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select*from employee_audit;
+Empty set (0.00 sec)
+
+ DELIMITER //
+mysql> CREATE TRIGGER TRG_BEFORE_INSERT_SALARY
+    -> BEFORE INSERT
+    -> ON EMPLOYEES
+    -> FOR EACH ROW
+    -> BEGIN
+    ->     IF NEW.SALARY<20000 THEN SIGNAL SQLSTATE'45000'
+    -> SET MESSAGE_TEXT='Salary cannot be less than 20000';
+    -> END IF;
+    -> END //
+Query OK, 0 rows affected (0.02 sec)
+
+
